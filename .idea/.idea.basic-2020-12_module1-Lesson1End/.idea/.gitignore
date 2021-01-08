@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.basic-2020-12_module1-Lesson1End.iml
+# Datasource local storage ignored files
+/../../../../../../../:\Otus\1\basic-2020-12_module1-Lesson1End\.idea\.idea.basic-2020-12_module1-Lesson1End\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
