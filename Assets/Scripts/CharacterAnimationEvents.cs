@@ -31,7 +31,7 @@ public class CharacterAnimationEvents : MonoBehaviour
 
     void HandEnd()
     {
-        character.SetState(Character.State.Idle);
+        character.SetState(Character.State.RunningFromEnemy);
         DeadCharacter();
     }
 }
