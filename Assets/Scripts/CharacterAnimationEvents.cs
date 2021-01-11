@@ -5,15 +5,18 @@ using UnityEngine;
 public class CharacterAnimationEvents : MonoBehaviour
 {
     Character character;
+    Character targetch;
 
     void Start()
     {
         character = GetComponentInParent<Character>();
+        targetch = character.target.GetComponent<Character>();
     }
 
     void ShootEnd()
     {
         character.SetState(Character.State.Idle);
+        DeadCharacter();
     }
 
     void AttackEnd()
@@ -23,11 +26,12 @@ public class CharacterAnimationEvents : MonoBehaviour
 
     void DeadCharacter()
     {
-        character.DeadPolicmen();
+        targetch.KillCharacter();
     }
 
     void HandEnd()
     {
         character.SetState(Character.State.Idle);
+        DeadCharacter();
     }
 }

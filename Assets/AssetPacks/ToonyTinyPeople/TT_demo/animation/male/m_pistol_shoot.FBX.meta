@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 9e3f937932b2a5649995a592185d9380
 ModelImporter:
-  serializedVersion: 20101
+  serializedVersion: 20200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -196,6 +196,13 @@ ModelImporter:
       events:
       - time: 0.3146374
         functionName: ShootEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.35905045
+        functionName: DeadCharacter
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -923,6 +930,7 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

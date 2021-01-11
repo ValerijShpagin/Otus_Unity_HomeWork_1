@@ -13,6 +13,7 @@ public class Character : MonoBehaviour
         Attack,
         BeginShoot,
         Shoot,
+        BeginDead,
         Dead,
         BeginHandAtack,
         HandAtack,
@@ -29,7 +30,7 @@ public class Character : MonoBehaviour
     State state;
 
     public Weapon weapon;
-    public Character target;
+    public Transform target;
     public float runSpeed;
     public float distanceFromEnemy;
     Vector3 originalPosition;
@@ -46,25 +47,30 @@ public class Character : MonoBehaviour
 
     public void SetState(State newState)
     {
+        if (IsDeadCharacter())
+        {
+            return;
+        }
         state = newState;
     }
 
     [ContextMenu("Attack")]
     void AttackEnemy()
     {
-        if (policmenDead) 
+        if (IsDeadCharacter())
         {
-            Debug.LogWarning("Policmen is dead");
+           return;
         }
-        if (state == State.Dead)
+
+        Character targetCharacter = target.GetComponent<Character>();
+        if (targetCharacter.IsDeadCharacter())
         {
-            Debug.LogWarning("Policmen cannot attack");
             return;
         }
         switch (weapon)
         {
             case Weapon.Hand:
-                state = State.BeginHandAtack;
+                state = State.RunningToEnemy;
                 break;
             case Weapon.Bat:
                 state = State.RunningToEnemy;
@@ -86,7 +92,16 @@ public class Character : MonoBehaviour
             case State.RunningToEnemy:
                 animator.SetFloat("Speed", runSpeed);
                 if (RunTowards(target.transform.position, distanceFromEnemy))
-                    state = State.BeginAttack;
+                    switch (weapon)
+                    {
+                        case Weapon.Bat:
+                            state = State.BeginAttack;
+                            break;
+                        case  Weapon.Hand:
+                            state = State.BeginHandAtack;
+                            break;
+                    }
+                    
                 break;
 
             case State.RunningFromEnemy:
@@ -119,19 +134,32 @@ public class Character : MonoBehaviour
             case State.HandAtack:
                 break;
             
-            case  State.Dead:
+            case  State.BeginDead:
                 animator.SetBool("Dead", true);
+                state = State.Dead;
+                break;
+            case  State.Dead:
                 break;
         }
     }
 
-    public void DeadPolicmen()
+    public bool IsDeadCharacter()
     {
-        if (target.state != State.Dead)
+        if (state == State.Dead)
+            return true;
+        if(state == State.BeginDead)
+            return true;
+        return false;
+    }
+
+    public void KillCharacter()
+    {
+        if (IsDeadCharacter())
         {
-            target.SetState(State.Dead);
-            policmenDead = true;
+            return;
         }
+
+        state = State.BeginDead;
     }
 
     bool RunTowards(Vector3 targetPosition, float distanceFromTarget)
